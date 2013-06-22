@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Stack;
 
 /**
@@ -9,11 +11,18 @@ import java.util.Stack;
 public class ReverseBinary {
 
     public static void main(String[] args){
-        int input = Integer.parseInt(args[0]);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try{
+        String line = br.readLine();
+
+        int input = Integer.parseInt(line);
 
         int reverseAsInt = reverseAsInt(input);
 
         System.out.println(reverseAsInt);
+        }catch(Exception e){
+            System.out.println("Error reading input from stdin");
+        }
     }
 
     private static int reverseAsInt(int input) {
