@@ -67,7 +67,7 @@ public class ZipfSong {
 
     private static void parseSongAndCount(int i, String songLine, TreeMap<Double,LinkedList<Song>> songMap){
         StringTokenizer t = new StringTokenizer(songLine, " ");
-        Integer songCount = Integer.parseInt(t.nextToken());
+        Long songCount = Long.parseLong(t.nextToken());
         String songName = t.nextToken();
         Song currSong = new Song(i,songName,songCount);
         if(songMap.get(currSong.quality) == null){
@@ -82,10 +82,10 @@ public class ZipfSong {
     private static class Song{
         private String name;
         private Integer trackNumber;
-        private Integer playCount;
+        private Long playCount;
         private Double quality;
 
-        public Song(int trackNumber,String songName,Integer playCount){
+        public Song(int trackNumber,String songName,Long playCount){
             this.name = songName;
             this.trackNumber = trackNumber;
             this.playCount = playCount;
@@ -94,7 +94,7 @@ public class ZipfSong {
 
         }
 
-        private Double computeQuality(int trackNumber, Integer playCount) {
+        private Double computeQuality(int trackNumber, Long playCount) {
             Double predictedPlayCount = computeZipf(trackNumber);
             return (double) playCount / predictedPlayCount;
         }
