@@ -29,15 +29,15 @@ public class ZipfSong {
             System.out.println("Error reading input from stdin");
         }
 
-        SortedMap<Double,LinkedList<Song>> songs = parseSongData(numSongs,br);
+        SortedMap<Float,LinkedList<Song>> songs = parseSongData(numSongs,br);
         printTopMSongs(numSongsToSelect, songs);
 
     }
 
-    private static void printTopMSongs(int numSongsToSelect, SortedMap<Double, LinkedList<Song>> songs) {
+    private static void printTopMSongs(int numSongsToSelect, SortedMap<Float, LinkedList<Song>> songs) {
         int foundSongs = 0;
         while(foundSongs < numSongsToSelect){
-            Double highestQuality = songs.lastKey();
+            Float highestQuality = songs.lastKey();
             List<Song> highestQualitySongs = songs.get(highestQuality);
             for(Song song : highestQualitySongs){
                 if (!(foundSongs == numSongsToSelect)){
@@ -53,8 +53,8 @@ public class ZipfSong {
         }
     }
 
-    private static TreeMap<Double, LinkedList<Song>> parseSongData(int numSongs, BufferedReader br) {
-        TreeMap<Double,LinkedList<Song>> songList = new TreeMap<>();
+    private static TreeMap<Float, LinkedList<Song>> parseSongData(int numSongs, BufferedReader br) {
+        TreeMap<Float,LinkedList<Song>> songList = new TreeMap<>();
         String songLine = null;
         for(int i=0;i<numSongs;i++){
             try{
@@ -69,7 +69,7 @@ public class ZipfSong {
 
     }
 
-    private static void parseSongAndCount(int i, String songLine, TreeMap<Double,LinkedList<Song>> songMap){
+    private static void parseSongAndCount(int i, String songLine, TreeMap<Float,LinkedList<Song>> songMap){
         StringTokenizer t = new StringTokenizer(songLine, " ");
         Long songCount = Long.parseLong(t.nextToken());
         String songName = t.nextToken();
@@ -87,7 +87,7 @@ public class ZipfSong {
         private String name;
         private Integer trackNumber;
         private Long playCount;
-        private Double quality;
+        private Float quality;
 
         public Song(int trackNumber,String songName,Long playCount){
             this.name = songName;
@@ -98,13 +98,13 @@ public class ZipfSong {
 
         }
 
-        private Double computeQuality(int trackNumber, Long playCount) {
-            Double predictedPlayCount = computeZipf(trackNumber);
+        private Float computeQuality(int trackNumber, Long playCount) {
+            Float predictedPlayCount = computeZipf(trackNumber);
             return playCount / predictedPlayCount;
         }
 
-        private Double computeZipf(int trackNumber) {
-            return 1.0 / (double) trackNumber;
+        private Float computeZipf(int trackNumber) {
+            return Float.parseFloat("1.0") / Float.parseFloat(Integer.toString(trackNumber));
         }
 
 
