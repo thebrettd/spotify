@@ -25,7 +25,7 @@ public class ZipfSong {
 
             numSongs = Integer.parseInt(n);
             numSongsToSelect = Integer.parseInt(m);
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Error reading input from stdin");
         }
 
@@ -96,7 +96,7 @@ public class ZipfSong {
 
         private Double computeQuality(int trackNumber, Long playCount) {
             Double predictedPlayCount = computeZipf(trackNumber);
-            return (double) playCount / predictedPlayCount;
+            return playCount / predictedPlayCount;
         }
 
         private Double computeZipf(int trackNumber) {
