@@ -41,11 +41,15 @@ public class ZipfSong {
             List<Song> highestQualitySongs = songs.get(highestQuality);
             for(Song song : highestQualitySongs){
                 if (!(foundSongs == numSongsToSelect)){
-                        System.out.println(song.name);
+                        if (foundSongs < numSongsToSelect-1){
+                            System.out.println(song.name);
+                        }else{
+                            System.out.print(song.name);
+                        }
                         foundSongs++;
                 }
              }
-                songs = songs.headMap(highestQuality);
+             songs = songs.headMap(highestQuality);
         }
     }
 
