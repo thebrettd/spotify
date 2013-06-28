@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.*;
 
 /**
@@ -29,15 +31,15 @@ public class ZipfSong {
             System.out.println("Error reading input from stdin");
         }
 
-        SortedMap<Float,LinkedList<Song>> songs = parseSongData(numSongs,br);
+        SortedMap<BigDecimal,LinkedList<Song>> songs = parseSongData(numSongs,br);
         printTopMSongs(numSongsToSelect, songs);
 
     }
 
-    private static void printTopMSongs(int numSongsToSelect, SortedMap<Float, LinkedList<Song>> songs) {
+    private static void printTopMSongs(int numSongsToSelect, SortedMap<BigDecimal, LinkedList<Song>> songs) {
         int foundSongs = 0;
         while(foundSongs < numSongsToSelect){
-            Float highestQuality = songs.lastKey();
+            BigDecimal highestQuality = songs.lastKey();
             List<Song> highestQualitySongs = songs.get(highestQuality);
             for(Song song : highestQualitySongs){
                 if (!(foundSongs == numSongsToSelect)){
@@ -53,8 +55,8 @@ public class ZipfSong {
         }
     }
 
-    private static TreeMap<Float, LinkedList<Song>> parseSongData(int numSongs, BufferedReader br) {
-        TreeMap<Float,LinkedList<Song>> songList = new TreeMap<>();
+    private static TreeMap<BigDecimal, LinkedList<Song>> parseSongData(int numSongs, BufferedReader br) {
+        TreeMap<BigDecimal,LinkedList<Song>> songList = new TreeMap<>();
         String songLine = null;
         for(int i=1;i<=numSongs;i++){
             try{
@@ -69,7 +71,7 @@ public class ZipfSong {
 
     }
 
-    private static void parseSongAndCount(int i, String songLine, TreeMap<Float,LinkedList<Song>> songMap){
+    private static void parseSongAndCount(int i, String songLine, TreeMap<BigDecimal,LinkedList<Song>> songMap){
         StringTokenizer t = new StringTokenizer(songLine, " ");
         Long songCount = Long.parseLong(t.nextToken());
         String songName = t.nextToken();
@@ -87,7 +89,7 @@ public class ZipfSong {
         private String name;
         private Integer trackNumber;
         private Long playCount;
-        private Float quality;
+        private BigDecimal quality;
 
         public Song(int trackNumber,String songName,Long playCount){
             this.name = songName;
@@ -98,13 +100,13 @@ public class ZipfSong {
 
         }
 
-        private Float computeQuality(int trackNumber, Long playCount) {
-            Float predictedPlayCount = computeZipf(trackNumber);
-            return playCount / predictedPlayCount;
+        private BigDecimal computeQuality(int trackNumber, Long playCount) {
+            BigDecimal predictedPlayCount = computeZipf(trackNumber);
+            return new BigDecimal(Long.toString(playCount)).divide(predictedPlayCount, MathContext.DECIMAL128);
         }
 
-        private Float computeZipf(int trackNumber) {
-            return 1f / trackNumber;
+        private BigDecimal computeZipf(int trackNumber) {
+            return BigDecimal.ONE.divide(new BigDecimal(trackNumber),MathContext.DECIMAL128);
         }
 
 
