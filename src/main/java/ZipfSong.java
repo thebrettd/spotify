@@ -56,7 +56,7 @@ public class ZipfSong {
     private static TreeMap<Float, LinkedList<Song>> parseSongData(int numSongs, BufferedReader br) {
         TreeMap<Float,LinkedList<Song>> songList = new TreeMap<>();
         String songLine = null;
-        for(int i=0;i<numSongs;i++){
+        for(int i=1;i<=numSongs;i++){
             try{
                 songLine = br.readLine();
             }catch(IOException e){
@@ -104,7 +104,7 @@ public class ZipfSong {
         }
 
         private Float computeZipf(int trackNumber) {
-            return Float.parseFloat("1.0") / Float.parseFloat(Integer.toString(trackNumber));
+            return 1f / trackNumber;
         }
 
 
